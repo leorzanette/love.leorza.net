@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>♥</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a0a0f 0%, #2d1520 50%, #1a0a0f 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Main heart container - handles fade-in animation */
+        .heart-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.5s ease-in;
+            z-index: 10;
+        }
+
+        /* The CSS heart using classic technique - 5X SIZE (50px → 250px) */
+        .heart {
+            background-color: #e00;
+            width: 250px;
+            height: 250px;
+            position: relative;
+            transform: rotate(-45deg);
+            margin: 50px; /* Spacing remains the same */
+            animation: heartbeat 1.2s infinite;
+        }
+
+        /* Create the circles - 5X SIZE */
+        .heart::before,
+        .heart::after {
+            content: "";
+            background-color: #e00;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%; /* Makes them circular */
+            position: absolute;
+        }
+
+        /* Position the circles - 5X OFFSETS (25px → 125px) */
+        .heart::before {
+            top: -125px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 125px;
+        }
+
+        /* Heart-shaped glow effect - 1.4x larger than main heart (350px) */
+        .heart-glow {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 105, 180, 0.4);
+            transform: rotate(-45deg);
+            z-index: -1;
+            filter: blur(40px);
+            box-shadow:
+                0 0 80px rgba(255, 105, 180, 0.6),
+                0 0 120px rgba(255, 20, 147, 0.4),
+                inset 0 0 60px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Create two circles for the glow heart lobes */
+        .heart-glow::before,
+        .heart-glow::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: rgba(255, 105, 180, 0.4);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+
+        /* Position top circle */
+        .heart-glow::before {
+            top: -175px;
+            left: 0;
+        }
+
+        /* Position right circle */
+        .heart-glow::after {
+            top: 0;
+            left: 175px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: rotate(-45deg) scale(1); }
+            15% { transform: rotate(-45deg) scale(1.1); } /* Pump In */
+            30% { transform: rotate(-45deg) scale(1); }   /* Relax */
+            45% { transform: rotate(-45deg) scale(1.1); } /* Pump In */
+            60% { transform: rotate(-45deg) scale(1); }   /* Relax */
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* Floating mini hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Container for each floating heart - handles animation and rotation */
+        .mini-heart-container {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        /* The actual heart shape using classic CSS technique */
+        .mini-heart {
+            position: relative;
+            width: 15px;
+            height: 15px;
+            background-color: #ff4081;
+            transform: rotate(-45deg);
+        }
+
+        /* Create two circles for the heart lobes */
+        .mini-heart::before,
+        .mini-heart::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #ff4081, #f50057);
+            border-radius: 50%; /* Makes them perfectly circular */
+        }
+
+        /* Position top circle */
+        .mini-heart::before {
+            top: -7.5px;
+            left: 0;
+        }
+
+        /* Position right circle */
+        .mini-heart::after {
+            top: 0;
+            left: 7.5px;
+        }
+
+        /* Float animation - applied to container, not the heart itself */
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(50vh) scale(0.8) rotate(180deg);
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1) rotate(360deg);
+            }
+        }
+
+        /* Generate multiple floating hearts with different positions and delays */
+        .mini-heart-container:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 8s; }
+        .mini-heart-container:nth-child(2) { left: 20%; animation-delay: 1s; animation-duration: 7s; }
+        .mini-heart-container:nth-child(3) { left: 30%; animation-delay: 2s; animation-duration: 9s; }
+        .mini-heart-container:nth-child(4) { left: 40%; animation-delay: 0.5s; animation-duration: 6.5s; }
+        .mini-heart-container:nth-child(5) { left: 50%; animation-delay: 1.5s; animation-duration: 8.5s; }
+        .mini-heart-container:nth-child(6) { left: 60%; animation-delay: 2.5s; animation-duration: 7.5s; }
+        .mini-heart-container:nth-child(7) { left: 70%; animation-delay: 0.8s; animation-duration: 6.8s; }
+        .mini-heart-container:nth-child(8) { left: 80%; animation-delay: 1.8s; animation-duration: 9.2s; }
+        .mini-heart-container:nth-child(9) { left: 90%; animation-delay: 2.2s; animation-duration: 7.8s; }
+        .mini-heart-container:nth-child(10) { left: 15%; animation-delay: 3s; animation-duration: 8.3s; }
+
+        /* Sparkles effect */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffb3d9;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ffb3d9, 0 0 30px #ff69b4;
+            animation: sparkle 3s infinite ease-in-out;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .sparkle:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 40%; left: 25%; animation-delay: 0.5s; }
+        .sparkle:nth-child(3) { top: 60%; left: 10%; animation-delay: 1s; }
+        .sparkle:nth-child(4) { top: 80%; left: 20%; animation-delay: 1.5s; }
+        .sparkle:nth-child(5) { top: 15%; left: 80%; animation-delay: 2s; }
+        .sparkle:nth-child(6) { top: 35%; left: 75%; animation-delay: 2.5s; }
+        .sparkle:nth-child(7) { top: 55%; left: 85%; animation-delay: 0.3s; }
+        .sparkle:nth-child(8) { top: 75%; left: 90%; animation-delay: 0.8s; }
+        .sparkle:nth-child(9) { top: 25%; left: 50%; animation-delay: 1.3s; }
+        .sparkle:nth-child(10) { top: 70%; left: 55%; animation-delay: 1.8s; }
+        .sparkle:nth-child(11) { top: 45%; left: 45%; animation-delay: 0.2s; }
+        .sparkle:nth-child(12) { top: 85%; left: 65%; animation-delay: 1.2s; }
+        .sparkle:nth-child(13) { top: 10%; left: 40%; animation-delay: 2.2s; }
+        .sparkle:nth-child(14) { top: 50%; left: 95%; animation-delay: 0.7s; }
+        .sparkle:nth-child(15) { top: 65%; left: 5%; animation-delay: 1.7s; }
+
+        /* Pulsing light rays - scaled to 5x (400px → 1000px) */
+        .light-rays {
+            position: absolute;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(255, 105, 180, 0.3) 0%,
+                rgba(255, 20, 147, 0.1) 30%,
+                transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            /* Reduce heart size for tablets (60% of 5x size = 150px) */
+            .heart {
+                width: 150px;
+                height: 150px;
+            }
+
+            .heart::before,
+            .heart::after {
+                width: 150px;
+                height: 150px;
+            }
+
+            .heart::before {
+                top: -75px;
+                left: 0;
+            }
+
+            .heart::after {
+                top: 0;
+                left: 75px;
+            }
+
+            /* Heart-shaped glow - 1.4x tablet heart size (210px) */
+            .heart-glow {
+                width: 210px;
+                height: 210px;
+                filter: blur(30px);
+            }
+
+            .heart-glow::before,
+            .heart-glow::after {
+                width: 210px;
+                height: 210px;
+                filter: blur(30px);
+            }
+
+            .heart-glow::before {
+                top: -105px;
+                left: 0;
+            }
+
+            .heart-glow::after {
+                top: 0;
+                left: 105px;
+            }
+
+            .light-rays {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Reduce heart size for phones (40% of 5x size = 100px) */
+            .heart {
+                width: 100px;
+                height: 100px;
+                margin: 30px;
+            }
+
+            .heart::before,
+            .heart::after {
+                width: 100px;
+                height: 100px;
+            }
+
+            .heart::before {
+                top: -50px;
+                left: 0;
+            }
+
+            .heart::after {
+                top: 0;
+                left: 50px;
+            }
+
+            /* Heart-shaped glow - 1.4x mobile heart size (140px) */
+            .heart-glow {
+                width: 140px;
+                height: 140px;
+                filter: blur(20px);
+            }
+
+            .heart-glow::before,
+            .heart-glow::after {
+                width: 140px;
+                height: 140px;
+                filter: blur(20px);
+            }
+
+            .heart-glow::before {
+                top: -70px;
+                left: 0;
+            }
+
+            .heart-glow::after {
+                top: 0;
+                left: 70px;
+            }
+
+            .light-rays {
+                width: 280px;
+                height: 280px;
+            }
+        }
+
+        /* Heart text overlay - 50% smaller (70px → 35px), tilted 30deg, positioned upper-center in heart */
+        .heart-text {
+            position: absolute;
+            top: 42%; /* Positioned slightly higher than center */
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(30deg); /* Center horizontally and tilt text 30 degrees */
+            z-index: 20;
+            text-align: center;
+            color: #ff1744;
+            font-family: 'Georgia', serif;
+            font-size: 35px;
+            font-weight: bold;
+            text-shadow:
+                3px 3px 6px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(255, 23, 68, 0.5);
+            line-height: 1.4;
+            pointer-events: none;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        .heart-text .ampersand {
+            display: block;
+            font-size: 40px;
+            font-style: italic;
+            margin: 6px 0;
+        }
+
+
+
+        .heart-container {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .love-message {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            z-index: 220;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.4);
+            color: #fff6f6;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(4rem, 18vw, 13rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow:
+                0 0 10px rgba(255, 0, 0, 1),
+                0 0 28px rgba(255, 23, 68, 0.95),
+                0 0 52px rgba(255, 105, 180, 0.70),
+                6px 6px 14px rgba(0, 0, 0, 0.95),
+                -2px -2px 0 rgba(255, 0, 0, 0.85),
+                2px -2px 0 rgba(255, 0, 0, 0.85),
+                -2px 2px 0 rgba(255, 0, 0, 0.85),
+                2px 2px 0 rgba(255, 0, 0, 0.85);
+        }
+
+        .firework-particle {
+            position: fixed;
+            left: var(--x);
+            top: var(--y);
+            width: var(--size, 10px);
+            height: var(--size, 10px);
+            border-radius: 50%;
+            background: var(--color, #fff);
+            box-shadow:
+                0 0 12px var(--color, #fff),
+                0 0 26px var(--color, #fff);
+            z-index: 180;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: fireworkBurst var(--duration, 4200ms) cubic-bezier(0.12, 0.72, 0.22, 1) forwards;
+        }
+
+        .firework-particle::after {
+            content: "";
+            position: absolute;
+            inset: 35%;
+            border-radius: inherit;
+            background: #fff;
+            opacity: 0.85;
+        }
+
+        @keyframes fireworkBurst {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.65);
+                filter: blur(0);
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.12);
+                filter: blur(1px);
+            }
+        }
+
+        .love-message.show {
+            animation: bigLove 8s ease-out forwards;
+        }
+
+        @keyframes bigLove {
+            0% { opacity: 0; transform: scale(0.4); }
+            18% { opacity: 1; transform: scale(1.08); }
+            88% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.08); }
+        }
+
+        /* Accessibility: Respect reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            .heart,
+            .mini-heart-container,
+            .sparkle,
+            .light-rays {
+                animation: none;
+            }
+
+            .heart,
+            .heart-glow {
+                transform: rotate(-45deg) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .heart-text {
+                font-size: 21px;
+                top: 42%; /* Positioned slightly higher than center */
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(30deg); /* Centered horizontally and tilted */
+            }
+
+            .heart-text .ampersand {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heart-text {
+                font-size: 14px;
+                top: 42%; /* Positioned slightly higher than center */
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(30deg); /* Centered horizontally and tilted */
+            }
+
+            .heart-text .ampersand {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <!-- leorza service favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.svg">
+</head>
+<body>
+    <!-- Pulsing light rays background -->
+    <div class="light-rays"></div>
+
+    <!-- Floating hearts -->
+    <div class="floating-hearts">
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+        <div class="mini-heart-container">
+            <div class="mini-heart"></div>
+        </div>
+    </div>
+
+    <!-- Sparkles effect -->
+    <div class="sparkles">
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+    </div>
+
+    <!-- Main heart -->
+    <div class="heart-container">
+        <div class="heart-glow"></div>
+        <div class="heart"></div>
+        <div class="heart-text">
+            Maria Edith
+            <span class="ampersand">&</span>
+            Leonardo
+        </div>
+    </div>
+
+    <div class="love-message" id="loveMessage" aria-live="polite">eu te amo</div>
+
+    <script>
+        const heartButton = document.querySelector('.heart-container');
+        const loveMessage = document.getElementById('loveMessage');
+        const fireworkColors = ['#ff1744', '#ff69b4', '#ffd166', '#ffffff', '#ff8fab', '#f72585'];
+
+        function launchFireworks() {
+            const rect = heartButton.getBoundingClientRect();
+            const originX = rect.left + rect.width / 2;
+            const originY = rect.top + rect.height / 2;
+            const bursts = [
+                { x: originX, y: originY, count: 54, radius: 260 },
+                { x: originX - rect.width * 0.20, y: originY - rect.height * 0.18, count: 30, radius: 170 },
+                { x: originX + rect.width * 0.22, y: originY - rect.height * 0.10, count: 30, radius: 170 },
+            ];
+
+            bursts.forEach((burst, burstIndex) => {
+                for (let i = 0; i < burst.count; i++) {
+                    const angle = (Math.PI * 2 * i / burst.count) + Math.random() * 0.24;
+                    const distance = burst.radius * (0.55 + Math.random() * 0.55);
+                    const particle = document.createElement('span');
+                    particle.className = 'firework-particle';
+                    particle.style.setProperty('--x', `${burst.x}px`);
+                    particle.style.setProperty('--y', `${burst.y}px`);
+                    particle.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+                    particle.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
+                    particle.style.setProperty('--size', `${7 + Math.random() * 10}px`);
+                    particle.style.setProperty('--duration', `${3600 + Math.random() * 1400 + burstIndex * 180}ms`);
+                    particle.style.setProperty('--color', fireworkColors[Math.floor(Math.random() * fireworkColors.length)]);
+                    document.body.appendChild(particle);
+                    particle.addEventListener('animationend', () => particle.remove(), { once: true });
+                }
+            });
+        }
+
+        heartButton.addEventListener('click', () => {
+            loveMessage.classList.remove('show');
+            void loveMessage.offsetWidth;
+            loveMessage.classList.add('show');
+            launchFireworks();
+        });
+    </script>
+
+</body>
+</html>
